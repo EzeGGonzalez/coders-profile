@@ -7,7 +7,7 @@
             <div class="field">
               <label class="label">Email</label>
               <div class="control has-icons-left has-icons-right">
-                <input class="input" type="text" placeholder="Email">
+                <input class="input" type="text" placeholder="Email" v-model:email="form.email">
                 <span class="icon is-small is-left">
                   <i class="fa fa-envelope"></i>
                 </span>
@@ -17,7 +17,7 @@
             <div class="field">
               <label class="label">Password</label>
               <div class="control has-icons-left has-icons-right">
-                <input class="input" type="password" placeholder="Password">
+                <input class="input" type="password" placeholder="Password" v-model:password="form.password">
                 <span class="icon is-small is-left">
                   <i class="fa fa-key"></i>
                 </span>
@@ -33,27 +33,22 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 
 export default {
   data () {
     return {
       form: {
         email: '',
-        name: '',
-        food: null,
-        checked: false,
-        secret: 'S3CR3T'
-      },
-      foods: [
-        { text: 'Select One', value: null },
-        'Carrots', 'Beans', 'Tomatoes', 'Corn'
-      ]
+        password: ''
+      }
     }
   },
   methods: {
-    onSubmit (evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.form))
+    login () {
+      firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
+        .then(data => console.log(firebase.auth().currentUser))
+        .catch(error => console.log(error.message))
     }
   }
 }

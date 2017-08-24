@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import Coders from '@/components/Coders'
 import Home from '@/components/Home'
 import Auth from '@/components/Auth'
 
@@ -9,9 +9,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/hello',
-      name: 'Hello',
-      component: Hello
+      path: '/coders',
+      name: 'Coders',
+      component: Coders
     },
     {
       path: '/',

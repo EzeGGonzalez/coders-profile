@@ -19,9 +19,10 @@ new Vue({
   components: { App },
   created () {
     firebase.initializeApp(config)
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.$router.push('/hello')
+        this.$router.push('/coders')
       } else {
         this.$router.push('/auth')
       }
