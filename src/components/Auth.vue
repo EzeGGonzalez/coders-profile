@@ -1,39 +1,32 @@
 <template>
-  <div class="container text-left">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
+  <div class="container">
+    <div class="columns is-vcentered">
+      <div class="column is-4 is-offset-4">
+        <div class="box">
+          <form v-on:submit.prevent="login">
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Email">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
 
-        <b-form @submit="onSubmit">
-          <b-form-group id="exampleInputGroup1"
-                        label="Email address:" label-for="exampleInput1"
-                        description="We'll never share your email with anyone else.">
-            <b-form-input id="exampleInput1"
-                          type="email" v-model="form.email" required
-                          placeholder="Enter email"
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group id="exampleInputGroup2"
-                        label="Your Name:" label-for="exampleInput2">
-            <b-form-input id="exampleInput2"
-                          type="text" v-model="form.name" required
-                          placeholder="Enter name"
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group id="exampleInputGroup3"
-                        label="Food:" label-for="exampleInput3">
-            <b-form-select id="exampleInput3"
-                          :options="foods" required
-                          v-model="form.food"
-            ></b-form-select>
-          </b-form-group>
-          <b-form-group id="exampleGroup4">
-            <b-form-checkbox v-model="form.checked" id="exampleInput4">
-              Check me out
-            </b-form-checkbox>
-          </b-form-group>
-          <b-button type="submit" variant="primary">Submit</b-button>
-        </b-form>
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control has-icons-left has-icons-right">
+                <input class="input" type="password" placeholder="Password">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-key"></i>
+                </span>
+              </div>
+            </div>
 
+            <button class="button is-primary">Ingresar</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -65,3 +58,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+button {
+  margin-top: 1rem;
+  width: 100%;
+}
+</style>

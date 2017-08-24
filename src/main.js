@@ -2,16 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
 import App from './App'
 import router from './router'
 import firebase from 'firebase'
 import {config} from './helpers/firebaseConfig'
 
-Vue.use(BootstrapVue)
+require('./assets/sass/main.scss')
 
 Vue.config.productionTip = false
 
