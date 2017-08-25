@@ -1,32 +1,74 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+  <section id="coders">
+    <div class="field is-horizontal filter" v-if="!fetchingData">
+      <div class="field-label is-normal">
+        <label class="label">Filtrar por nombre</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input v-model="filter" class="input" type="text" placeholder="Nombre">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-multiline">
+      <div class="column is-3" v-for="(coder, index) in codersProfiles">
+        <coder-card :key="coder.id" :coder="coder">
+        </coder-card>
+      </div>
+    </div>
+
+    <div class="loading" v-if="fetchingData">
+      <a class="button is-danger is-large is-loading">Loading</a>
+    </div>
+  </section>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import CoderCard from '@/components/CoderCard'
+
 export default {
-  name: 'hello',
+  name: 'home-view',
+  components: { CoderCard },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      filter: ''
     }
+  },
+  computed: {
+    ...mapState([
+      'coders',
+      'fetchingData',
+      'error'
+    ]),
+    codersProfiles () {
+      if (this.coders) {
+        if (this.filter.length) {
+          let result = {}
+          for (var key in this.coders) {
+            if (this.coders[key].fullname.toLowerCase().indexOf(this.filter.toLowerCase()) >= 0) {
+              result[key] = this.coders[key]
+            }
+          }
+          return result
+        } else {
+          return this.coders
+        }
+      } else {
+        return []
+      }
+    }
+  },
+  methods: {
+    ...mapActions([
+      'fetchCoders'
+    ])
+  },
+  created () {
+    this.fetchCoders()
   }
 }
 </script>
@@ -49,5 +91,18 @@ li {
 
 a {
   color: #42b983;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.field.filter {
+  margin-bottom: 1.5rem;
+}
+
+.field-body {
+  flex-grow: 1;
 }
 </style>

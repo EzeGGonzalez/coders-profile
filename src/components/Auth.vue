@@ -26,6 +26,14 @@
 
             <button class="button is-primary">Ingresar</button>
           </form>
+
+          <br />
+
+          <div class="is-righted">
+            <router-link to="/nuevo-usuario">
+              Soy un usuario nuevo <span class="icon is-small is-left"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -33,7 +41,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import { auth } from '@/api/firebase'
 
 export default {
   data () {
@@ -46,17 +54,28 @@ export default {
   },
   methods: {
     login () {
-      firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then(data => console.log(firebase.auth().currentUser))
-        .catch(error => console.log(error.message))
+      auth.signInWithEmailAndPassword(this.form.email, this.form.password)
+        .then(data => this.$router.push('/coders'))
+        .catch(error => console.log('error', error.message))
     }
+  },
+  created () {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.$router.push('/coders')
+      }
+    })
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 button {
   margin-top: 1rem;
   width: 100%;
+}
+
+.is-righted {
+  text-align: right;
 }
 </style>

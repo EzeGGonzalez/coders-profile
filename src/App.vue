@@ -2,27 +2,49 @@
   <div class="hero is-fullheight is-light" id="app">
     <nav class="navbar">
       <div class="navbar-brand">
-        <a class="navbar-item" href="http://bulma.io">
+        <router-link class="navbar-item" v-bind:to="loggedIn ? '/coders' : '/auth'">
           <img src="./assets/iso.png" alt="Ada">
-        </a>
+        </router-link>
 
-        <div class="navbar-burger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+        <router-link class="navbar-item" v-bind:to="loggedIn ? '/coders' : '/auth'">
+          Ada | Feria de talentos
+        </router-link>
       </div>
+
+       <div class="navbar-menu">
+         <div class="navbar-end">
+            <a class="navbar-item is-hidden-desktop-only tooltip is-tooltip-left" v-on:click="logout" data-tooltip="'Cerrar sesión'">
+              <span class="icon">
+                <i class="fa fa-sign-out"></i>
+              </span>
+            </a>
+          </div>
+       </div>
     </nav>
 
     <div class="hero-body">
-      <router-view></router-view>
+      <div class="container">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    logout () {
+      firebase.auth().signOut()
+    }
+  },
+  computed: {
+    loggedIn () {
+      return !!firebase.auth().currentUser
+    }
+  }
 }
 </script>
 
@@ -35,8 +57,24 @@ export default {
 }
 
 nav {
-  .navbar-brand img {
-    height: 1.5rem;
+  color: white;
+
+  .navbar-menu {
+    .navbar-item {
+      background-color: transparent;
+    }
+  }
+
+  .navbar-brand {
+    color: white;
+
+    img {
+      height: 1.5rem;
+    }
+
+    .navbar-item {
+      background-color: transparent;
+    }
   }
 }
 </style>
