@@ -9,6 +9,7 @@ import authHelper from '@/api/firebase'
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/coders/:id/feedback',
