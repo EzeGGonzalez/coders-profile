@@ -10,6 +10,7 @@ export default {
   error: null,
 
   coders: {},
+  feedbacks: {},
   feedback: {},
   coder: {}
 }

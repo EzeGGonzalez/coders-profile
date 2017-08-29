@@ -70,5 +70,21 @@ export default {
 
   updateFeedback (state, feedback) {
     state.feedback = feedback
+  },
+
+  [types.FETCH_ALL_FEEDBACKS_REQUEST] (state) {
+    state.fetchingData = true
+    state.error = null
+  },
+
+  [types.FETCH_ALL_FEEDBACKS_SUCCESS] (state, { feedbacks }) {
+    state.fetchingData = false
+    state.error = null
+    state.feedbacks = { ...feedbacks }
+  },
+
+  [types.FETCH_ALL_FEEDBACKS_FAILURE] (state, { error }) {
+    state.fetchingData = false
+    state.error = error
   }
 }

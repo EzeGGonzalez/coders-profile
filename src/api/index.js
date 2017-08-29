@@ -2,6 +2,7 @@ import { db } from './firebase'
 
 const codersRef = db.ref('/coders')
 const feedbacksRef = db.ref('/feedbacks')
+const usersRef = db.ref('/users')
 
 export default {
   getCoders () {
@@ -14,8 +15,17 @@ export default {
     return query.once('value')
   },
 
+  getFeedbacks () {
+    return feedbacksRef.once('value')
+  },
+
   getCoder (coder) {
     const query = codersRef.child(coder)
+    return query.once('value')
+  },
+
+  getCompany (id) {
+    const query = usersRef.child(id)
     return query.once('value')
   },
 

@@ -21,7 +21,7 @@
         </p>
 
         <p>
-          <a :href="coder.resume" download>
+          <a :href="coder.resume" target="_blank">
             <span class="icon"><i class="fa fa-download" aria-hidden="true"></i></span> Descargar CV
           </a>
         </p>

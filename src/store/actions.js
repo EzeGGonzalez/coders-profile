@@ -22,6 +22,14 @@ export default {
       .catch(error => commit(types.FETCH_CODER_FEEDBACK_FAILURE, { error }))
   },
 
+  fetchAllFeedbacks ({ commit }) {
+    commit(types.FETCH_ALL_FEEDBACKS_REQUEST)
+
+    API.getFeedbacks()
+      .then(snap => commit(types.FETCH_ALL_FEEDBACKS_SUCCESS, { feedbacks: snap.val() }))
+      .catch(error => commit(types.FETCH_ALL_FEEDBACKS_FAILURE, { error }))
+  },
+
   fetchCoder ({ commit }, { coder }) {
     commit(types.FETCH_CODER_REQUEST)
 

@@ -17,6 +17,11 @@
             Feedback para:<br />
             <b>{{coder.fullname}}</b>
           </p>
+
+          <p>
+            Empresa:<br />
+            <b><owner :id="ownerId"></owner></b>
+          </p>
         </div>
       </div>
 
@@ -68,7 +73,7 @@
 
           <div class="field">
             <label class="checkbox">
-              <input v-model="coderSelected" type="checkbox" @change="markCoder">
+              <input v-model="coderSelected" type="checkbox" @change="markCoder" :disabled="showOnly">
               Me gustaría continuar el proceso de selección con {{coder.fullname}}
             </label>
           </div>
@@ -78,7 +83,7 @@
             Feedback guardado
           </div>
 
-          <div class="field is-grouped">
+          <div class="field is-grouped" v-if="!showOnly">
             <div class="control">
               <a v-on:click="saveFeedback" class="button is-info">Guardar</a>
             </div>
@@ -96,6 +101,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import { auth } from '@/api/firebase'
+import Owner from '@/components/admin/Owner'
 
 export default {
   name: 'CoderFeedabck',
@@ -113,6 +119,12 @@ export default {
     ]),
     coderSelected () {
       return this.coder && this.coder.selected && this.coder.selected[auth.currentUser.uid] === true
+    },
+    showOnly () {
+      return !!this.$route.params.owner
+    },
+    ownerId () {
+      return this.$route.params.owner || auth.currentUser.uid
     }
   },
   methods: {
@@ -137,7 +149,10 @@ export default {
   },
   created () {
     this.fetchCoder({coder: this.$route.params.id})
-    this.fetchFeedback({coder: this.$route.params.id, owner: auth.currentUser.uid})
+    this.fetchFeedback({coder: this.$route.params.id, owner: this.$route.params.owner || auth.currentUser.uid})
+  },
+  components: {
+    Owner
   }
 }
 </script>
