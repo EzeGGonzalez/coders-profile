@@ -1,26 +1,30 @@
 <template>
   <section id="coders">
-    <div class="columns">
-      <div class="column is-12">
-        <div class="loading" v-if="fetchingData">
-          <a class="button is-danger is-large is-loading">Loading</a>
-        </div>
-
-        <div v-if="!fetchingData" class="content">
-          <div class="coder-box" v-for="(owners, coderId) in feedbacks">
-            <h1>
-              <b><coder :id="coderId"></coder></b>
-            </h1>
-
-            <ul>
-              <li v-for="(feedback, ownerId) in owners">
-                <router-link :to="`/coders/${coderId}/feedback/show/${ownerId}`">
-                  <owner :id="ownerId"></owner> <span class="icon"><i class="fa fa-link" aria-hidden="true"></i></span>
-                </router-link>
-              </li>
-            </ul>
-
-          </div>
+    <div class="columns is-multiline">
+      <div class="column is-4" v-for="(feedbacksByCompany, keyCoder) in feedbacks">
+        <div class="box">
+          <article class="media">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                <coder-image :id="keyCoder"></coder-image>
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong><coder :id="keyCoder"></coder></strong>
+                  <br>
+                  <div class="columns">
+                    <div class="column is-narrow" v-for="(feedback, keyOwner) in feedbacksByCompany">
+                      <router-link :to="`/coders/${keyCoder}/feedback/show/${keyOwner}`">
+                        <span class="tag is-info"><owner :id="keyOwner"></owner></span>
+                      </router-link>
+                    </div>
+                  </div>
+                </p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </div>
@@ -30,16 +34,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import Coder from '@/components/admin/User'
 import Owner from '@/components/admin/Owner'
+import Coder from '@/components/admin/Coder'
+import CoderImage from '@/components/admin/CoderImage'
 
 export default {
   name: 'AdminFeedabck',
-  data () {
-    return {
-      success: false
-    }
-  },
   computed: {
     ...mapState([
       'feedbacks',
@@ -56,13 +56,12 @@ export default {
     this.fetchAllFeedbacks()
   },
   components: {
-    Coder, Owner
+    Owner,
+    Coder,
+    CoderImage
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.coder-box {
-  margin-bottom: 1rem;
-}
 </style>

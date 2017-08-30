@@ -26,7 +26,7 @@ export default {
     commit(types.FETCH_ALL_FEEDBACKS_REQUEST)
 
     API.getFeedbacks()
-      .then(snap => commit(types.FETCH_ALL_FEEDBACKS_SUCCESS, { feedbacks: snap.val() }))
+      .then(feedbacks => commit(types.FETCH_ALL_FEEDBACKS_SUCCESS, { feedbacks }))
       .catch(error => commit(types.FETCH_ALL_FEEDBACKS_FAILURE, { error }))
   },
 

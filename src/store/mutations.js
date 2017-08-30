@@ -80,7 +80,7 @@ export default {
   [types.FETCH_ALL_FEEDBACKS_SUCCESS] (state, { feedbacks }) {
     state.fetchingData = false
     state.error = null
-    state.feedbacks = { ...feedbacks }
+    state.feedbacks = feedbacks
   },
 
   [types.FETCH_ALL_FEEDBACKS_FAILURE] (state, { error }) {

@@ -4,6 +4,10 @@ const codersRef = db.ref('/coders')
 const feedbacksRef = db.ref('/feedbacks')
 const usersRef = db.ref('/users')
 
+feedbacksRef.on('value', function () {})
+
+console.log()
+
 export default {
   getCoders () {
     const query = codersRef.orderByChild('fullname')
@@ -16,8 +20,27 @@ export default {
   },
 
   getFeedbacks () {
-    return feedbacksRef.once('value')
+    return feedbacksRef.once('value').then(snap => snap.val())
   },
+
+  // async getFeedbacks () {
+  //   let feedbacks = []
+  //   let owners = []
+  //
+  //   let feeds = await feedbacksRef.once('value').then(snap => snap.val())
+  //
+  //   for (let coderId in feeds) {
+  //     let coder = await codersRef.child(coderId).once('value').then(snap => snap.val())
+  //
+  //     for (let ownerId in feeds[coderId]) {
+  //       owners[ownerId] = owners[ownerId] || await usersRef.child(ownerId).once('value').then(snap => snap.val())
+  //
+  //       feedbacks.push({ ...feeds[coderId][ownerId], ...{ coder, owner: { id: ownerId, ...owners[ownerId] } } })
+  //     }
+  //   }
+  //
+  //   return feedbacks
+  // },
 
   getCoder (coder) {
     const query = codersRef.child(coder)
